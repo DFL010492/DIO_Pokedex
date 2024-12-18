@@ -53,6 +53,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    text-transform: capitalize;
 }
 
 .pokemon .detail .types{
@@ -69,6 +70,7 @@
     border-radius: 1rem;
     filter: brightness(1.1);
     text-align: center;
+    text-transform: capitalize;
 }
 
 
@@ -85,7 +87,7 @@
     background-color: #ee7f30}
 .water {
     background-color: #678fee}
-.eletric {
+.electric {
     background-color: #f7cf2e}
 .ice {
     background-color: #98d5d7}
