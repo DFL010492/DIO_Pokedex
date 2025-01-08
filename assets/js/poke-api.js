@@ -3,7 +3,7 @@ const pokeApi = {};
 function convertPokeApiDetailToPokemon(pokeDetail) {
     const pokemon = new Pokemon();
 
-    pokemon.number = pokeDetail.order;
+    pokemon.number = pokeDetail.id;
     pokemon.name = pokeDetail.name;
     
     
@@ -29,8 +29,16 @@ pokeApi.getPokemons = (offset = 0, limit = 20) => {
     
     return fetch(url)
         .then((response) => response.json())
-        .then((jsonBody) => jsonBody.results)
-        .then((pokemons) =>pokemons.map(pokeApi.getPokemonDetail))
-        .then((detailRequest) => Promise.all(detailRequest))
-        .then((pokemonsDetails) => pokemonsDetails)
+        .then((jsonBody) => ({
+            results: jsonBody.results,
+            total: jsonBody.count, // Captura o total de Pokémon
+        }))
+        .then((data) => ({
+            pokemons: data.results.map(pokeApi.getPokemonDetail),
+            total: data.total,
+        }))
+        .then((data) => Promise.all(data.pokemons).then((pokemonsDetails) => ({
+            pokemons: pokemonsDetails,
+            total: data.total,
+        })));
 };
